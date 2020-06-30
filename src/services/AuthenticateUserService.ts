@@ -2,6 +2,8 @@ import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs'; // compare compara uma senha não criptografada com uma senha criptografada
 import { sign } from 'jsonwebtoken';
 
+import authConfig from '../config/auth';
+
 import User from '../models/User';
 
 interface RequestDTO {
@@ -36,9 +38,9 @@ class AuthenticateUserService {
         // 1º parâmetro é o payload são infos do usuário não seguras, id, permissões, etc. Fácil de descriptografar.
         // 2º segundo parâmetro é um secret (senha) nossa - usar md5 online pra gerar uma chave
         // 3º configurações do token - não deixar expiração eterna e 1 dia seria muito também, deixar minutos ou horas
-        const token = sign({}, 'c7c1670df8bb2eb863ff5109735500d1', {
+        const token = sign({}, authConfig.jwt.secret, {
             subject: user.id,
-            expiresIn: '1d',
+            expiresIn: authConfig.jwt.expiresIn,
         });
 
         return {
