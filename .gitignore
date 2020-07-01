@@ -1,3 +1,11 @@
-node_modules
+.idea/
+.vscode/
+node_modules/
+buid/
+temp/
 # dist
 # uploads/*
+
+ignorar todos os arquivos da pasta tmp menos o gitkeep - mantendo assim a pasta
+tmp/*
+!tmp/.gitkeep
