@@ -4,6 +4,8 @@ import { sign } from 'jsonwebtoken';
 
 import authConfig from '../config/auth';
 
+import AppError from '../errors/AppError';
+
 import User from '../models/User';
 
 interface RequestDTO {
@@ -27,12 +29,12 @@ class AuthenticateUserService {
             where: { email },
         });
         if (!user) {
-            throw new Error('Incorret email/password combination.');
+            throw new AppError('Incorret email/password combination.', 401);
         }
 
         const passwordMatched: boolean = await compare(password, user.password);
         if (!passwordMatched) {
-            throw new Error('Incorret email/password combination.');
+            throw new AppError('Incorret email/password combination.', 401);
         }
 
         // 1º parâmetro é o payload são infos do usuário não seguras, id, permissões, etc. Fácil de descriptografar.
