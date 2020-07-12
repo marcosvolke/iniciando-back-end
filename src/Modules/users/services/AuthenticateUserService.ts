@@ -2,11 +2,11 @@ import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs'; // compare compara uma senha não criptografada com uma senha criptografada
 import { sign } from 'jsonwebtoken';
 
-import authConfig from '../config/auth';
+import authConfig from '../../../config/auth';
 
-import AppError from '../errors/AppError';
+import AppError from '../../../shared/errors/AppError';
 
-import User from '../models/User';
+import User from '../entities/User';
 
 interface RequestDTO {
     email: string;
