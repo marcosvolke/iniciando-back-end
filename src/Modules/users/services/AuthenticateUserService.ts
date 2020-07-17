@@ -1,4 +1,3 @@
-import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs'; // compare compara uma senha não criptografada com uma senha criptografada
 import { sign } from 'jsonwebtoken';
 
@@ -6,36 +5,32 @@ import authConfig from '@config/auth';
 
 import AppError from '@shared/errors/AppError';
 
-import User from '../infra/typeorm/entities/User';
+import User from '@modules/users/infra/typeorm/entities/User';
+import IUsersRepository from '../repositories/IUsersRepository';
 
-interface RequestDTO {
+interface IRequestDTO {
     email: string;
     password: string;
 }
 
-interface ResponseDTO {
+interface IResponseDTO {
     user: User;
     token: string;
 }
 
 class AuthenticateUserService {
+    constructor(private usersRepository: IUsersRepository) {}
+
     public async execute({
         email,
         password,
-    }: RequestDTO): Promise<ResponseDTO> {
-        console.log('1');
-        const usersRepository = getRepository(User);
-        console.log('2');
-
-        const user: User | undefined = await usersRepository.findOne({
-            where: { email },
-        });
+    }: IRequestDTO): Promise<IResponseDTO> {
+        const user: User | undefined = await this.usersRepository.findByEmail(
+            email,
+        );
         if (!user) {
             throw new AppError('Incorret email/password combination.', 401);
         }
-
-        console.log('3');
-
 
         const passwordMatched: boolean = await compare(password, user.password);
         if (!passwordMatched) {
