@@ -1,5 +1,6 @@
 import { compare } from 'bcryptjs'; // compare compara uma senha não criptografada com uma senha criptografada
 import { sign } from 'jsonwebtoken';
+import { injectable, inject } from 'tsyringe';
 
 import authConfig from '@config/auth';
 
@@ -18,8 +19,12 @@ interface IResponseDTO {
     token: string;
 }
 
+@injectable()
 class AuthenticateUserService {
-    constructor(private usersRepository: IUsersRepository) {}
+    constructor(
+        @inject('UsersRepository')
+        private usersRepository: IUsersRepository,
+    ) {}
 
     public async execute({
         email,
