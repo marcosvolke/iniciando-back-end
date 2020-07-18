@@ -1,3 +1,4 @@
+import AppError from '@shared/errors/AppError';
 import FakeAppointmentsRepository from '../repositories/fakes/FakeAppointmentsRepository';
 import CreateAppointmentService from './CreateAppointmentService';
 
@@ -19,7 +20,26 @@ describe('CreateAppointment', () => {
         expect(appointment.provider_id).toBe('156156156');
     });
 
-    it('should not be able to create to appointment on the same time', () => {
-        expect(1 + 2).toBe(3);
+    it('should not be able to create to appointment on the same time', async () => {
+        const fakeAppointmentsRepository = new FakeAppointmentsRepository();
+
+        const createAppointment = new CreateAppointmentService(
+            fakeAppointmentsRepository,
+        );
+
+        const appointmentDate = new Date(2020, 7, 18, 10);
+
+        await createAppointment.execute({
+            date: appointmentDate,
+            provider_id: '156156156',
+        });
+
+        // Remover sempre o await para rodar dentro do expect
+        expect(
+            createAppointment.execute({
+                date: appointmentDate,
+                provider_id: '156156156',
+            }),
+        ).rejects.toBeInstanceOf(AppError);
     });
 });
