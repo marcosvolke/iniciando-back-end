@@ -1,6 +1,7 @@
 import AppError from '@shared/errors/AppError';
 
 import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
+import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 import CreateUserService from './CreateUserService';
 import User from '../infra/typeorm/entities/User';
 
@@ -8,8 +9,12 @@ import User from '../infra/typeorm/entities/User';
 describe('CreateUser', () => {
     it('should be able to create a new user', async () => {
         const fakeUserRepository = new FakeUsersRepository();
+        const fakeHashProvider = new FakeHashProvider();
 
-        const createUser = new CreateUserService(fakeUserRepository);
+        const createUser = new CreateUserService(
+            fakeUserRepository,
+            fakeHashProvider,
+        );
 
         const user = await createUser.execute({
             name: 'Marcos',
@@ -23,8 +28,12 @@ describe('CreateUser', () => {
 
     it('should not be able to create a user with same e-mail', async () => {
         const fakeUserRepository = new FakeUsersRepository();
+        const fakeHashProvider = new FakeHashProvider();
 
-        const createUser = new CreateUserService(fakeUserRepository);
+        const createUser = new CreateUserService(
+            fakeUserRepository,
+            fakeHashProvider,
+        );
 
         await createUser.execute({
             name: 'Marcos',
@@ -43,8 +52,12 @@ describe('CreateUser', () => {
 
     it('should not be able to create users with different e-mail', async () => {
         const fakeUserRepository = new FakeUsersRepository();
+        const fakeHashProvider = new FakeHashProvider();
 
-        const createUser = new CreateUserService(fakeUserRepository);
+        const createUser = new CreateUserService(
+            fakeUserRepository,
+            fakeHashProvider,
+        );
 
         await createUser.execute({
             name: 'Marcos',
