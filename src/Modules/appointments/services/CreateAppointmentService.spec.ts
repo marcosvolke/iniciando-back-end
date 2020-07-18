@@ -44,7 +44,7 @@ describe('CreateAppointment', () => {
         ).rejects.toBeInstanceOf(AppError);
     });
 
-    it('should be able to create appointment on a different date', async () => {
+    it('should be able to create appointments with different date', async () => {
         const fakeAppointmentsRepository = new FakeAppointmentsRepository();
 
         const createAppointment = new CreateAppointmentService(
