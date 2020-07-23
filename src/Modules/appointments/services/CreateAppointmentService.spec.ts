@@ -36,7 +36,7 @@ describe('CreateAppointment', () => {
         });
 
         // Remover sempre o await para rodar dentro do expect
-        expect(
+        await expect(
             createAppointment.execute({
                 date: appointmentDate,
                 provider_id: '156156156',
