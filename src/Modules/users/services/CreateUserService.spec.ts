@@ -5,17 +5,22 @@ import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 import CreateUserService from './CreateUserService';
 import User from '../infra/typeorm/entities/User';
 
+let fakeUserRepository: FakeUsersRepository;
+let fakeHashProvider: FakeHashProvider;
+let createUser: CreateUserService;
+
 // categorizo todos os testes dentro desse arquivo
 describe('CreateUser', () => {
-    it('should be able to create a new user', async () => {
-        const fakeUserRepository = new FakeUsersRepository();
-        const fakeHashProvider = new FakeHashProvider();
-
-        const createUser = new CreateUserService(
+    beforeEach(() => {
+        fakeUserRepository = new FakeUsersRepository();
+        fakeHashProvider = new FakeHashProvider();
+        createUser = new CreateUserService(
             fakeUserRepository,
             fakeHashProvider,
         );
+    });
 
+    it('should be able to create a new user', async () => {
         const user = await createUser.execute({
             name: 'Marcos',
             email: 'marcos.volke@gmail.com',
@@ -27,14 +32,6 @@ describe('CreateUser', () => {
     });
 
     it('should not be able to create a user with same e-mail', async () => {
-        const fakeUserRepository = new FakeUsersRepository();
-        const fakeHashProvider = new FakeHashProvider();
-
-        const createUser = new CreateUserService(
-            fakeUserRepository,
-            fakeHashProvider,
-        );
-
         await createUser.execute({
             name: 'Marcos',
             email: 'marcos.volke@gmail.com',
@@ -51,21 +48,13 @@ describe('CreateUser', () => {
     });
 
     it('should not be able to create users with different e-mail', async () => {
-        const fakeUserRepository = new FakeUsersRepository();
-        const fakeHashProvider = new FakeHashProvider();
-
-        const createUser = new CreateUserService(
-            fakeUserRepository,
-            fakeHashProvider,
-        );
-
         await createUser.execute({
             name: 'Marcos',
             email: 'marcos.volke@gmail.com',
             password: '123456',
         });
 
-        expect(
+        await expect(
             createUser.execute({
                 name: 'Marcos',
                 email: 'marcos@sizex.com.br',

@@ -3,15 +3,19 @@ import FakeAppointmentsRepository from '../repositories/fakes/FakeAppointmentsRe
 import CreateAppointmentService from './CreateAppointmentService';
 import Appointment from '../infra/typeorm/entities/Appointment';
 
+let fakeAppointmentsRepository: FakeAppointmentsRepository;
+let createAppointment: CreateAppointmentService;
+
 // categorizo todos os testes dentro desse arquivo
 describe('CreateAppointment', () => {
-    it('should be able to create a new appointment', async () => {
-        const fakeAppointmentsRepository = new FakeAppointmentsRepository();
-
-        const createAppointment = new CreateAppointmentService(
+    beforeEach(() => {
+        fakeAppointmentsRepository = new FakeAppointmentsRepository();
+        createAppointment = new CreateAppointmentService(
             fakeAppointmentsRepository,
         );
+    });
 
+    it('should be able to create a new appointment', async () => {
         const appointment = await createAppointment.execute({
             date: new Date(),
             provider_id: '156156156',
@@ -22,12 +26,6 @@ describe('CreateAppointment', () => {
     });
 
     it('should not be able to create appointment on the same time', async () => {
-        const fakeAppointmentsRepository = new FakeAppointmentsRepository();
-
-        const createAppointment = new CreateAppointmentService(
-            fakeAppointmentsRepository,
-        );
-
         const appointmentDate = new Date(2020, 7, 18, 10);
 
         await createAppointment.execute({
@@ -45,19 +43,13 @@ describe('CreateAppointment', () => {
     });
 
     it('should be able to create appointments with different date', async () => {
-        const fakeAppointmentsRepository = new FakeAppointmentsRepository();
-
-        const createAppointment = new CreateAppointmentService(
-            fakeAppointmentsRepository,
-        );
-
         await createAppointment.execute({
             date: new Date(2020, 7, 18, 10),
             provider_id: '156156156',
         });
 
         // Remover sempre o await para rodar dentro do expect
-        expect(
+        await expect(
             createAppointment.execute({
                 date: new Date(2020, 7, 18, 9),
                 provider_id: '156156156',

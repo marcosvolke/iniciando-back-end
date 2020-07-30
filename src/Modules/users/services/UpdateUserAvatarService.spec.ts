@@ -3,17 +3,22 @@ import FakeStorageProvider from '@shared/container/providers/StorageProvider/fak
 import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
 import UpdateUserAvatarService from './UpdateUserAvatarService';
 
+let fakeUserRepository: FakeUsersRepository;
+let fakeStorageProvider: FakeStorageProvider;
+let updateUserAvatar: UpdateUserAvatarService;
+
 // categorizo todos os testes dentro desse arquivo
 describe('UpdateUserAvatar', () => {
-    it('should be able to update avatar user', async () => {
-        const fakeUserRepository = new FakeUsersRepository();
-        const fakeStorageProvider = new FakeStorageProvider();
-
-        const updateUserAvatar = new UpdateUserAvatarService(
+    beforeEach(() => {
+        fakeUserRepository = new FakeUsersRepository();
+        fakeStorageProvider = new FakeStorageProvider();
+        updateUserAvatar = new UpdateUserAvatarService(
             fakeUserRepository,
             fakeStorageProvider,
         );
+    });
 
+    it('should be able to update avatar user', async () => {
         const user = await fakeUserRepository.create({
             email: 'marcos@sizex.com.br',
             name: 'Marcos',
@@ -29,14 +34,6 @@ describe('UpdateUserAvatar', () => {
     });
 
     it('should not be able to update avatar from non existing user', async () => {
-        const fakeUserRepository = new FakeUsersRepository();
-        const fakeStorageProvider = new FakeStorageProvider();
-
-        const updateUserAvatar = new UpdateUserAvatarService(
-            fakeUserRepository,
-            fakeStorageProvider,
-        );
-
         await expect(
             updateUserAvatar.execute({
                 user_id: 'usuário que não existe',
@@ -46,16 +43,8 @@ describe('UpdateUserAvatar', () => {
     });
 
     it('should delete old avatar when updating new one', async () => {
-        const fakeUserRepository = new FakeUsersRepository();
-        const fakeStorageProvider = new FakeStorageProvider();
-
         // retorna a função delete file que quero saber se foi executada
         const deleteFile = jest.spyOn(fakeStorageProvider, 'deleteFile');
-
-        const updateUserAvatar = new UpdateUserAvatarService(
-            fakeUserRepository,
-            fakeStorageProvider,
-        );
 
         const user = await fakeUserRepository.create({
             email: 'marcos@sizex.com.br',
