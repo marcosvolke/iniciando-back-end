@@ -1,4 +1,5 @@
-import 'reflect-metadata'; // Usado para injeção de dependência do tsyringe
+import 'reflect-metadata';
+// Usado para injeção de dependência do tsyringe
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import 'express-async-errors';
