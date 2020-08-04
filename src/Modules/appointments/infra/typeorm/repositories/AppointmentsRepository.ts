@@ -1,7 +1,10 @@
-import { getRepository, Repository } from 'typeorm';
+import { getRepository, Repository, Raw } from 'typeorm';
+
+// Raw é pra passar a query pura na linguagem do banco de dados
 
 import IAppointmentsRepository from '@modules/appointments/repositories/iAppointmentsRepository';
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO';
+import IFindAllinMonthProviderDTO from '@modules/appointments/dtos/IFindAllinMonthProviderDTO';
 
 import Appointment from '../entities/Appointment';
 
@@ -29,6 +32,26 @@ class AppointmentsRepository implements IAppointmentsRepository {
         await this.OrmRepository.save(appointment);
 
         return appointment;
+    }
+
+    public async findAllInMonthFromProvider({
+        provider_id,
+        month,
+        year,
+    }: IFindAllinMonthProviderDTO): Promise<Appointment[]> {
+        const parsedMonth = String(month).padStart(2, '0');
+
+        const appointments = await this.OrmRepository.find({
+            where: {
+                provider_id,
+                data: Raw(
+                    dateFieldName =>
+                        `to_char(${dateFieldName}, 'MM-YYYY') = '${parsedMonth}-${year}'`,
+                ),
+            },
+        });
+
+        return appointments;
     }
 }
 
