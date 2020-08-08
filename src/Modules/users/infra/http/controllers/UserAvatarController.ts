@@ -2,6 +2,7 @@
 // Criado controller a parte pq o método patch/update já seria usado no userController
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarService';
 
@@ -16,8 +17,8 @@ export default class UserAvatarController {
             avatarFilename: request.file.filename,
         });
 
-        delete user.password;
+        // delete user.password;
 
-        return response.json(user);
+        return response.json(classToClass(user));
     }
 }
