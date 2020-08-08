@@ -5,6 +5,8 @@ dist/
 buid/
 temp/
 coverage/
+.env
+ormconfig.json
 # dist
 # uploads/*
 

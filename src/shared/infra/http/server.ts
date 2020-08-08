@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import 'dotenv/config';
 // Usado para injeção de dependência do tsyringe
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
