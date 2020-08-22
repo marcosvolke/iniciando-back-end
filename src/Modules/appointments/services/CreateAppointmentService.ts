@@ -76,12 +76,12 @@ class CreateAppointmentService {
             content: `Novo agendamento para dia ${dateFormatted}`,
         });
 
-        const prefix = `provider-appointments:${provider_id}:${format(
+        const cacheKey = `provider-appointments:${provider_id}:${format(
             appointmentDate,
             'yyyy-M-d',
         )}`;
 
-        await this.cacheProvider.invalidatePrefix(prefix);
+        await this.cacheProvider.invalidate(cacheKey);
 
         return appointment;
     }
