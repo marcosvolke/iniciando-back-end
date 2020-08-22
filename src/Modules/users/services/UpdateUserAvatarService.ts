@@ -3,6 +3,7 @@ import { injectable, inject } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 
 import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import IUsersRepository from '../repositories/IUsersRepository';
 import User from '../infra/typeorm/entities/User';
 
@@ -16,8 +17,12 @@ class UpdateUserAvatarService {
     constructor(
         @inject('UsersRepository')
         private usersRepository: IUsersRepository,
+
         @inject('StorageProvider')
         private storageProvider: IStorageProvider,
+
+        @inject('CacheProvider')
+        private cacheProvider: ICacheProvider,
     ) {}
 
     public async execute({
@@ -40,6 +45,11 @@ class UpdateUserAvatarService {
 
         user.avatar = filename;
         await this.usersRepository.save(user);
+
+        // se nao invalidar todo o cache de appointments, vai dar erro pra carregar avatar dos appointments
+        // o certo, certo mesmo, talvez fosse nem ter cache de appointments...
+        // se atualizar o nome de usuário tb, nao vai refletir pra appointments em cache.. a nao ser q coloque esse codigo na atualizacao do perfil tb
+        this.cacheProvider.invalidatePrefix('provider-appointments');
 
         return user;
     }
