@@ -16,10 +16,10 @@ import '@shared/container'; // Container de injeção de dependência do tsyring
 
 const app = express();
 
-app.use(rateLimiter);
 app.use(cors());
 app.use(express.json());
 app.use('/files', express.static(uploadConfig.uploadsFolder));
+app.use(rateLimiter); // importante colocar depois da rota de files, pq numa tela só acaba fazendo várias requisicoes pra pegar avatar juntas
 app.use(routes);
 
 app.use(errors());
