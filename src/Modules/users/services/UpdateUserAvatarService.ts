@@ -50,6 +50,7 @@ class UpdateUserAvatarService {
         // o certo, certo mesmo, talvez fosse nem ter cache de appointments...
         // se atualizar o nome de usuário tb, nao vai refletir pra appointments em cache.. a nao ser q coloque esse codigo na atualizacao do perfil tb
         this.cacheProvider.invalidatePrefix('provider-appointments');
+        this.cacheProvider.invalidatePrefix('providers-list');
 
         return user;
     }
