@@ -1,7 +1,7 @@
 import { getMongoRepository, MongoRepository } from 'typeorm';
 
-import INotificationsRepository from 'modTeste/notifications/repositories/INotificationsRepository';
-import ICreateNotificationDTO from 'modTeste/notifications/dtos/ICreateNotificationDTO';
+import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository';
+import ICreateNotificationDTO from '@modules/notifications/dtos/ICreateNotificationDTO';
 import Notification from '../schemas/Notification';
 
 class NotificationsRepository implements INotificationsRepository {

@@ -1,10 +1,10 @@
 import { uuid } from 'uuidv4';
 import { isEqual, getMonth, getYear, getDate } from 'date-fns';
 
-import IAppointmentsRepository from 'modTeste/appointments/repositories/iAppointmentsRepository';
-import ICreateAppointmentDTO from 'modTeste/appointments/dtos/ICreateAppointmentDTO';
-import IFindAllinMonthProviderDTO from 'modTeste/appointments/dtos/IFindAllinMonthProviderDTO';
-import IFindAllinDayProviderDTO from 'modTeste/appointments/dtos/IFindAllinDayProviderDTO';
+import IAppointmentsRepository from '@modules/appointments/repositories/iAppointmentsRepository';
+import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO';
+import IFindAllinMonthProviderDTO from '@modules/appointments/dtos/IFindAllinMonthProviderDTO';
+import IFindAllinDayProviderDTO from '@modules/appointments/dtos/IFindAllinDayProviderDTO';
 
 import Appointment from '../../infra/typeorm/entities/Appointment';
 

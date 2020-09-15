@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { celebrate, Segments, Joi } from 'celebrate';
 
-import ensureAuthenticated from 'modTeste/users/infra/http/middlewares/ensuredAuthenticated';
+import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensuredAuthenticated';
 import AppointmentsController from '../controllers/AppointmentsController';
 import ProviderAppointmentsController from '../controllers/ProviderAppointmentsController';
 

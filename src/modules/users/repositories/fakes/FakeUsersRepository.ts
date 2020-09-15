@@ -1,8 +1,8 @@
 import { uuid } from 'uuidv4';
 
-import IUsersRepository from 'modTeste/users/repositories/IUsersRepository';
-import ICreateUserDTO from 'modTeste/users/dtos/ICreateUserDTO';
-import IFindAllProvidersDTO from 'modTeste/users/dtos/IFIndAllProvidersDTO';
+import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
+import IFindAllProvidersDTO from '@modules/users/dtos/IFIndAllProvidersDTO';
 
 import User from '../../infra/typeorm/entities/User';
 

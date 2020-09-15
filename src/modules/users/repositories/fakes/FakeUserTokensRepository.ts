@@ -1,8 +1,8 @@
 import { uuid } from 'uuidv4';
 
-import IUserTokensRepository from 'modTeste/users/repositories/IUserTokensRepository';
+import IUserTokensRepository from '@modules/users/repositories/IUserTokensRepository';
 
-import UserToken from 'modTeste/users/infra/typeorm/entities/UserToken';
+import UserToken from '@modules/users/infra/typeorm/entities/UserToken';
 
 class FakeUserTokensRepository implements IUserTokensRepository {
     private userTokens: UserToken[] = [];

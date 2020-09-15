@@ -6,7 +6,7 @@ import path from 'path';
 // import User from '../infra/typeorm/entities/User';
 import AppError from '@shared/errors/AppError';
 import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
-import IUserTokensRepository from 'modTeste/users/repositories/IUserTokensRepository';
+import IUserTokensRepository from '@modules/users/repositories/IUserTokensRepository';
 import IUsersRepository from '../repositories/IUsersRepository';
 
 interface IRequestDTO {

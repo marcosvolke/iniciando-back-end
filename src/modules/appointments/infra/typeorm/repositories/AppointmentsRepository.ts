@@ -1,11 +1,11 @@
-import IFindAllinDayProviderDTO from 'modTeste/appointments/dtos/IFindAllinDayProviderDTO';
+import IFindAllinDayProviderDTO from '@modules/appointments/dtos/IFindAllinDayProviderDTO';
 import { getRepository, Repository, Raw } from 'typeorm';
 
 // Raw é pra passar a query pura na linguagem do banco de dados
 
-import IAppointmentsRepository from 'modTeste/appointments/repositories/iAppointmentsRepository';
-import ICreateAppointmentDTO from 'modTeste/appointments/dtos/ICreateAppointmentDTO';
-import IFindAllinMonthProviderDTO from 'modTeste/appointments/dtos/IFindAllinMonthProviderDTO';
+import IAppointmentsRepository from '@modules/appointments/repositories/iAppointmentsRepository';
+import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO';
+import IFindAllinMonthProviderDTO from '@modules/appointments/dtos/IFindAllinMonthProviderDTO';
 
 import Appointment from '../entities/Appointment';
 

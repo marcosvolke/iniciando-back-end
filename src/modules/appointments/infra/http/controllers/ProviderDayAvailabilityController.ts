@@ -2,7 +2,7 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
-import ListProviderDayAvailabilityService from 'modTeste/appointments/services/ListProviderDayAvailabilityService';
+import ListProviderDayAvailabilityService from '@modules/appointments/services/ListProviderDayAvailabilityService';
 
 export default class ProviderDayAvailabilityController {
     public async index(
