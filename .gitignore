@@ -7,9 +7,9 @@ temp/
 coverage/
 .env
 ormconfig.json
-# dist
-# uploads/*
 
-ignorar todos os arquivos da pasta tmp menos o gitkeep - mantendo assim a pasta
-tmp/*
+# ignorar todos os arquivos da pasta tmp menos o gitkeep - mantendo assim a pasta
+tmp/**
 !tmp/.gitkeep
+!tmp/uploads
+!tmp/uploads/.gitkeep
